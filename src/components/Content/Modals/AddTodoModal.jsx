@@ -3,15 +3,17 @@ import { BASE_URL } from '../../../constant'
 import mainContext from '../../../ContextAndReducer/MainContext'
 import { toast } from 'react-toastify'
 import axios from 'axios'
+import Loader from '../../Loader'
 
 const AddTodoModal = () => {
-  const {userDetail, dispatch, localTodos, setLocalTodos} = useContext(mainContext)
+  const {userDetail, dispatch, localTodos, setLocalTodos, loading, setLoading} = useContext(mainContext)
   const [title, setTitle] = useState('')
   const [description, setDiscription] = useState('')
   
 
   const handleSubmit = async (e)=>{
     e.preventDefault();
+    setLoading(true)
     try {
         const response = await axios.post(`${BASE_URL}todos/`, {'title':title, 'description':description}, {
           headers :{
@@ -28,11 +30,13 @@ const AddTodoModal = () => {
             toast.success('Todo Created Successfully');
             setTitle('');
             setDiscription('');
+            setLoading(false)
             window.add_todo.close();
         }
       
     } catch (error) {
       toast.error("Something went wrong!")
+      setLoading(false)
     }
   }
   return (
@@ -51,8 +55,12 @@ const AddTodoModal = () => {
             </div>
             <div className="modal-action">
                 {/* if there is a button in form, it will close the modal */}
-                <button className="btn" type='button' onClick={()=>window.add_todo.close()}>Close</button>
-                <button className="btn" type='submit'>Add</button>
+                {loading ? <Loader/> : (
+                  <>
+                    <button className="btn" type='button' onClick={()=>window.add_todo.close()}>Close</button>
+                    <button className="btn" type='submit'>Add</button>  
+                  </>
+                )}
             </div>
         </form>
         </dialog>

@@ -6,9 +6,10 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { BASE_URL } from '../../../constant'
 import mainContext from '../../../ContextAndReducer/MainContext'
+import Loader from '../../Loader'
 
 const EditModal = ({editTodo, closeModal, id}) => {
-  const {userDetail, dispatch, localTodos, setLocalTodos} = useContext(mainContext)
+  const {userDetail, dispatch, localTodos, setLocalTodos, loading, setLoading} = useContext(mainContext)
   const todo = localTodos?.filter(todo=>todo?.id === id)
   const [title, setTitle] = useState('')
   const [description, setDiscription] = useState('')
@@ -17,6 +18,7 @@ const EditModal = ({editTodo, closeModal, id}) => {
 
   const handleSubmit = async (e)=>{
     e.preventDefault();
+    setLoading(true)
     try {
         const response = await axios.put(`${BASE_URL}updateTodo/${todo[0].id}/`, {'title':title, 'description':description}, {
           headers :{
@@ -37,6 +39,7 @@ const EditModal = ({editTodo, closeModal, id}) => {
                 return todo
               }
             })
+            setLoading(false)
             setLocalTodos(updatedTodo)
             toast.success('Todo Updated Successfully');
             window.my_modal_1.close();
@@ -44,6 +47,7 @@ const EditModal = ({editTodo, closeModal, id}) => {
       
     } catch (error) {
       toast.error("Something went wrong!")
+      setLoading(false)
     }
   }
   useEffect(() => {
@@ -68,9 +72,13 @@ const EditModal = ({editTodo, closeModal, id}) => {
                 value={description} onChange={(e)=>setDiscription(e.target.value)} />
             </div>
             <div className="modal-action">
-                {/* if there is a button in form, it will close the modal */}
-                <button className="btn" type='button' onClick={closeModal}>Close</button>
-                <button className="btn" type='submit'>Update</button>
+                {loading ? <Loader/> : (
+                  <>
+                    <button className="btn" type='button' onClick={closeModal}>Close</button>
+                    <button className="btn" type='submit'>Update</button>
+                  </>
+                )}
+                
             </div>
         </form>
         </dialog>

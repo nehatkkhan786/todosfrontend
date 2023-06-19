@@ -21,6 +21,7 @@ export const MainAppContextProvider =  ({children}) =>{
     const [selectPeriod, setSelectPeriod] = useState(0)
     const [filDate, setFilDate] = useState('')
     const [userDetail, setUserDetail] = useState(localStorageUser)
+    const[loading, setLoading] = useState(false)
    
 
    
@@ -28,13 +29,14 @@ export const MainAppContextProvider =  ({children}) =>{
 
     const initialState = {
        todos:[],
-       loading:true,
+       
     }
 
     const [state, dispatch] = useReducer(MainReducer, initialState)
     
     
     const updateTodoStatue = async(id, accessToken, status)=>{
+        setLoading(true)
         const response = await axios.post(`${BASE_URL}updateTodoStatus/${id}/`, {'status':status}, {
             headers:{
                 'content-type': 'application/json', 
@@ -56,6 +58,7 @@ export const MainAppContextProvider =  ({children}) =>{
         })
         setLocalTodos(updatedTodo)
        }
+       setLoading(false)
     }
 
 
@@ -63,7 +66,7 @@ export const MainAppContextProvider =  ({children}) =>{
     return <mainContext.Provider value={{
         // global state 
        todos:state.todos,
-       loading:state.loading,
+       
         
         // global Fucntions
        dispatch:dispatch,
@@ -81,6 +84,8 @@ export const MainAppContextProvider =  ({children}) =>{
         setFilDate:setFilDate,
         userDetail:userDetail, 
         setUserDetail:setUserDetail,
+        loading:loading,
+        setLoading:setLoading,
 
 
        

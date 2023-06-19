@@ -1,8 +1,9 @@
 import React, { useContext } from 'react'
 import mainContext from '../../ContextAndReducer/MainContext'
+import Loader from '../Loader'
 
 const ReviewColumn = ({localTodos}) => {
-    const {userDetail, todos, updateTodoStatue} = useContext(mainContext)
+    const {userDetail, todos, updateTodoStatue, loading} = useContext(mainContext)
     const ReviewTodo = localTodos?.filter((todo)=>todo?.status === 'REVIEW')
 
   return (
@@ -41,7 +42,8 @@ const ReviewColumn = ({localTodos}) => {
 
                                     {/* Priority and Created By */}
                                     <div className='flex items-center gap-2'>
-                                    <div className="badge cursor-pointer bg-green-800 text-white" onClick={()=>updateTodoStatue(todo?.id, userDetail?.access, 'DONE')}>Mark As Done</div>
+                                        <div className="badge cursor-pointer bg-green-800 text-white" onClick={()=>updateTodoStatue(todo?.id, userDetail?.access, 'DONE')}>Mark As Done</div>
+                                    
                                     </div>
                             </div>
 

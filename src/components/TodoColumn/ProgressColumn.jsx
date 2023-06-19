@@ -4,9 +4,10 @@ import { toast } from 'react-toastify'
 import { BASE_URL } from '../../constant'
 import mainContext from '../../ContextAndReducer/MainContext'
 import EditModal from '../Content/Modals/EditModal'
+import Loader from '../Loader'
 
 const ProgressColumn = ({localTodos}) => {
-    const {todos, userDetail, dispatch, updateTodoStatue,  setLocalTodos} = useContext(mainContext)
+    const {todos, userDetail, dispatch, updateTodoStatue,  setLocalTodos, loading} = useContext(mainContext)
     const [title, setTitle] = useState()
     const [description, setDiscription] = useState()
     const progress = localTodos?.filter((todo)=>todo?.status === 'TODO')
@@ -85,8 +86,15 @@ const ProgressColumn = ({localTodos}) => {
 
                                     {/* Priority and Created By */}
                                     <div className='flex items-center gap-2'>
-                                        <div className="badge cursor-pointer" onClick={()=>updateTodoStatue(todo?.id, userDetail?.access, 'DONE')}>Mark As Done</div>
-                                        <div className="badge cursor-pointer" onClick={()=>updateTodoStatue(todo?.id, userDetail?.access, 'REVIEW')}>Mark Under Review</div>
+
+                                     
+                                           
+                                                <div className="badge cursor-pointer" onClick={()=>updateTodoStatue(todo?.id, userDetail?.access, 'DONE')}>Mark As Done</div>
+                                                <div className="badge cursor-pointer" onClick={()=>updateTodoStatue(todo?.id, userDetail?.access, 'REVIEW')}>Mark Under Review</div>
+                                           
+                                     
+                                       
+                                        
                                         {/* <p>Salman Khan</p> */}
                                     </div>
                             </div>
