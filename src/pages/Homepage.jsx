@@ -13,7 +13,7 @@ const Homepage = () => {
   const { dispatch, setLocalTodos,userDetail} = useContext(mainContext)
 
   const getTodos = async (access_token) =>{
-    const {data} = await axios.get(`${BASE_URL}/api/todos/`, {
+    const {data} = await axios.get(`${BASE_URL}todos/`, {
       headers: {
         'content-type': 'application/json',
         'Authorization' : `Bearer ${access_token}`
