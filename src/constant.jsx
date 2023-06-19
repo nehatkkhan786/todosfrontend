@@ -1,1 +1,1 @@
-export const BASE_URL = 'nehat.pythonanywhere.com/api/'
+export const BASE_URL = 'https://nehat.pythonanywhere.com/api/'
