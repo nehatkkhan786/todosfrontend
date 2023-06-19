@@ -6,13 +6,14 @@ import Navbar from "../components/Navbar";
 import mainContext from "../ContextAndReducer/MainContext";
 
 import axios from 'axios'
+import { BASE_URL } from "../constant";
 
 
 const Homepage = () => {
   const { dispatch, setLocalTodos,userDetail} = useContext(mainContext)
 
   const getTodos = async (access_token) =>{
-    const {data} = await axios.get(`http://127.0.0.1:8000/api/todos/`, {
+    const {data} = await axios.get(`${BASE_URL}/api/todos/`, {
       headers: {
         'content-type': 'application/json',
         'Authorization' : `Bearer ${access_token}`

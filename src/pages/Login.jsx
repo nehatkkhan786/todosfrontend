@@ -3,6 +3,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router'
 import mainContext from '../ContextAndReducer/MainContext'
+import { BASE_URL } from '../constant'
 
 
 const Login = () => {
@@ -22,7 +23,7 @@ const Login = () => {
             
             e.preventDefault();
             try {
-               const response = await axios.post('http://127.0.0.1:8000/api/login/', {'username':username, 'password':password},{
+               const response = await axios.post(`${BASE_URL}login/`, {'username':username, 'password':password},{
                 headers:{
                     'content-type': 'application/json'
                 }
